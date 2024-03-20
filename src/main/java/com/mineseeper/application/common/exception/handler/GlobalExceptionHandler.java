@@ -1,23 +1,22 @@
-package com.tickets.application.common.exception.handler;
+package com.mineseeper.application.common.exception.handler;
 
-import com.tickets.application.common.exception.dao.ApiErrorResponse;
+import com.mineseeper.application.common.exception.dao.ApiErrorResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @Slf4j
-@ControllerAdvice
+@RestControllerAdvice
 @RequiredArgsConstructor
 public class GlobalExceptionHandler {
 
     private final ApiErrorResponseCreator apiErrorResponseCreator;
     private final ErrorDebugMessageCreator errorDebugMessageCreator;
-
-    @Override
+    
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ApiErrorResponse handleMethodArgumentNotValidException(final MethodArgumentNotValidException exception) {

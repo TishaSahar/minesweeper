@@ -1,4 +1,4 @@
-package com.tickets.application.common.exception.dao;
+package com.mineseeper.application.common.exception.dao;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;

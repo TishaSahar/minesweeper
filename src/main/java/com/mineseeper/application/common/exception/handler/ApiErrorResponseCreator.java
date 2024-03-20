@@ -1,6 +1,6 @@
-package com.tickets.application.common.exception.handler;
+package com.mineseeper.application.common.exception.handler;
 
-import com.tickets.application.common.exception.dao.ApiErrorResponse;
+import com.mineseeper.application.common.exception.dao.ApiErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
