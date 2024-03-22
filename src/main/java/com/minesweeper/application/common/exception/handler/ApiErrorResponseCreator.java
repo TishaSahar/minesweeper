@@ -1,8 +1,9 @@
-package com.mineseeper.application.common.exception.handler;
+package com.minesweeper.application.common.exception.handler;
 
-import com.mineseeper.application.common.exception.dao.ApiErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+
+import com.minesweeper.application.common.exception.dao.ApiErrorResponse;
 
 import java.time.LocalDateTime;
 

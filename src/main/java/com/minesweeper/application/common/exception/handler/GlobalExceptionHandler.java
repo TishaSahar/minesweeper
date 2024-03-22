@@ -1,6 +1,5 @@
-package com.mineseeper.application.common.exception.handler;
+package com.minesweeper.application.common.exception.handler;
 
-import com.mineseeper.application.common.exception.dao.ApiErrorResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -8,6 +7,8 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import com.minesweeper.application.common.exception.dao.ApiErrorResponse;
 
 @Slf4j
 @RestControllerAdvice

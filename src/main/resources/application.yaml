@@ -1,0 +1,32 @@
+#
+# Server Properties
+#
+server:
+  port: 8080
+  tomcat:
+    accept-count: 100
+
+lombok:
+  addLombokGeneratedAnnotation: true
+
+#
+# Spring Properties
+#
+spring:
+  datasource:
+    url: jdbc:postgresql://0.0.0.0:5432/testdb?serverTimezone=UTC
+    username: postgres
+    password: postgres
+  jpa:
+    hibernate:
+      ddl-auto: validate
+  liquibase:
+    enabled: true
+    change-log: classpath:db/changelog-master.yaml
+    url: ${spring.datasource.url}
+    user: ${spring.datasource.username}
+    password: ${spring.datasource.password}
+    drop-first: true
+
+service:
+  ticket_provider: 10

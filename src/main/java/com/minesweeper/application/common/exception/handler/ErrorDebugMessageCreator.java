@@ -1,4 +1,4 @@
-package com.mineseeper.application.common.exception.handler;
+package com.minesweeper.application.common.exception.handler;
 
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.stereotype.Service;

@@ -1,0 +1,29 @@
+version: '3.9'
+
+networks:
+  minesweeper-network:
+    attachable: true
+
+volumes:
+  postgresdb_data:
+
+services:
+  minesweeper-postgresdb:
+    image: 'postgres:13.11-bullseye'
+    container_name: minesweeper_postgres
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=testdb
+    ports:
+      - '5432:5432'
+    networks:
+      - minesweeper-network
+    volumes:
+      - postgresdb_data:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    restart: on-failure
