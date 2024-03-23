@@ -9,18 +9,25 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.minesweeper.application.dao.GameDao;
+import com.minesweeper.application.model.Game;
+import com.minesweeper.application.service.GameProvider;
+
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Validated
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/app")
 public class MinesweeperController {
-    private static final UUID gameId = UUID.randomUUID();
+    private final GameProvider gameProvider;
 
     @PostMapping("/new")
-    public ResponseEntity<String> newGame(@RequestBody final String newGame) {
-        log.info("New game created with id: {}", gameId.toString());
+    public ResponseEntity<GameDao> newGame(@RequestBody final GameDao aNewGame) {
+        log.info("New game created with id: {}", aNewGame.toString());
+        final GameDao newGame = gameProvider.createGame(aNewGame);
         return ResponseEntity.ok().body(newGame);
     }
 }

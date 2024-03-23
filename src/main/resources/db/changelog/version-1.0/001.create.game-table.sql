@@ -1,6 +1,6 @@
 create TABLE IF NOT EXISTS games
 (
-    id   UUID        PRIMARY KEY,
+    game_id   UUID        PRIMARY KEY,
     width INT NOT NULL,
     height INT NOT NULL,
     mines_count INT NOT NULL,
