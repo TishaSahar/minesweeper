@@ -20,14 +20,14 @@ import lombok.extern.slf4j.Slf4j;
 @Validated
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/app")
+@RequestMapping("/api")
 public class MinesweeperController {
     private final GameProvider gameProvider;
 
     @PostMapping("/new")
-    public ResponseEntity<GameDao> newGame(@RequestBody final GameDao aNewGame) {
-        log.info("New game created with id: {}", aNewGame.toString());
-        final GameDao newGame = gameProvider.createGame(aNewGame);
+    public ResponseEntity<Game> newGameRequest(@RequestBody final GameDao aNewGame) {
+        final Game newGame = gameProvider.createGame(aNewGame);
+        log.info("New game created with id: {}", newGame.getGame_id());
         return ResponseEntity.ok().body(newGame);
     }
 }

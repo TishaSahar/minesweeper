@@ -36,16 +36,18 @@ public class Game {
 
     @Column(name = "minesCount", nullable = false)
     private int minesCount;
+
+    @Column(name = "completed", nullable = false)
+    private Boolean completed;
     
     @Column(name = "field", nullable = true)
-    private String field;
+    private char[][] field;
 
     public Game(final GameDao aGameDao) {
         width = aGameDao.getWidth();
         height = aGameDao.getHeight();
         minesCount = aGameDao.getMinesCount();
-        for (int i = 0; i < height * width; ++i) {
-            field += ' ';
-        }
+        completed = false;
+        field = new char[][]{{' '},};
     }
 }

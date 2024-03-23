@@ -4,5 +4,6 @@ create TABLE IF NOT EXISTS games
     width INT NOT NULL,
     height INT NOT NULL,
     mines_count INT NOT NULL,
-    field VARCHAR(128) NOT NULL
+    completed BOOLEAN NOT NULL,
+    field CHAR[][] NOT NULL
 );

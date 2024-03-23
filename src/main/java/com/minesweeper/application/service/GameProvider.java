@@ -33,9 +33,8 @@ public class GameProvider {
     }
 
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED)
-    public GameDao createGame(final GameDao gameDao) {
+    public Game createGame(final GameDao gameDao) {
         final Game game = new Game(gameDao);
-        final Game savedGame = gameRepository.save(game);
-        return gameConverter.toGameDao(savedGame);
+        return gameRepository.save(game);
     }
 }
