@@ -2,6 +2,7 @@ package com.minesweeper.application.model;
 
 import java.util.UUID;
 
+import com.minesweeper.application.common.exception.exception.InvalidParametersException;
 import com.minesweeper.application.dao.GameDao;
 
 import jakarta.persistence.Column;
@@ -44,10 +45,13 @@ public class Game {
     private char[][] field;
 
     public Game(final GameDao aGameDao) {
+        if (aGameDao.getWidth() * aGameDao.getHeight() * aGameDao.getMinesCount() == 0) {
+            throw new InvalidParametersException();
+        }
         width = aGameDao.getWidth();
         height = aGameDao.getHeight();
         minesCount = aGameDao.getMinesCount();
         completed = false;
-        field = new char[][]{{' '},};
+        field = new char[][]{{' '}};
     }
 }

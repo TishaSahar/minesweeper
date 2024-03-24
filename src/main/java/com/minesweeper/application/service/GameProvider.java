@@ -6,6 +6,7 @@ import java.util.UUID;
 import org.springframework.boot.autoconfigure.h2.H2ConsoleAutoConfiguration;
 import org.springframework.stereotype.Service;
 
+import com.minesweeper.application.common.exception.exception.InvalidParametersException;
 import com.minesweeper.application.converter.GameConverter;
 import com.minesweeper.application.dao.GameDao;
 import com.minesweeper.application.model.Game;
@@ -16,7 +17,9 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class GameProvider {
@@ -33,8 +36,13 @@ public class GameProvider {
     }
 
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED)
-    public Game createGame(final GameDao gameDao) {
-        final Game game = new Game(gameDao);
-        return gameRepository.save(game);
+    public Game createGame(final GameDao gameDao) throws InvalidParametersException {
+        try {
+            final Game game = new Game(gameDao);
+            return gameRepository.save(game);
+        } catch (RuntimeException e) {
+            log.error(e.getMessage());
+            throw e;
+        }
     }
 }
