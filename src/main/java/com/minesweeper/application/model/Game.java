@@ -4,6 +4,7 @@ import static com.minesweeper.application.constants.MinesweeperConstants.*;
 
 import com.minesweeper.application.common.exception.exception.InvalidParametersException;
 import com.minesweeper.application.dao.GameDao;
+import com.minesweeper.application.util.GameUtil;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -17,8 +18,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Arrays;
-import java.util.Random;
 import java.util.UUID;
 
 @Getter
@@ -48,25 +47,6 @@ public class Game {
     @Column(name = "field", nullable = true)
     private char[][] field;
 
-    private void buildField() {
-        field = new char[height][width];
-        for (char[] cs : field) {
-            Arrays.fill(cs, CLOSED);
-        }
-
-        // Push mines to the field
-        Random rand = new Random();
-        int minesCounter = minesCount;
-        while (minesCounter != 0) {
-            int row = rand.nextInt(height);
-            int col = rand.nextInt(width);
-            if (field[row][col] != MINE) {
-                field[row][col] = MINE;
-                --minesCounter;
-            }
-        }
-    }
-
     public Game(final GameDao aGameDao) {
         if (aGameDao.getWidth() < 2 || aGameDao.getWidth() > 30
                 || aGameDao.getHeight() < 2 || aGameDao.getHeight() > 30
@@ -77,6 +57,6 @@ public class Game {
         height = aGameDao.getHeight();
         minesCount = aGameDao.getMinesCount();
         completed = false;
-        buildField();
+        field = GameUtil.buildField(aGameDao);
     }
 }
