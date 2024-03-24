@@ -3,12 +3,11 @@ package com.minesweeper.application.service;
 import java.util.Optional;
 import java.util.UUID;
 
-import org.springframework.boot.autoconfigure.h2.H2ConsoleAutoConfiguration;
 import org.springframework.stereotype.Service;
 
-import com.minesweeper.application.common.exception.exception.InvalidParametersException;
-import com.minesweeper.application.converter.GameConverter;
 import com.minesweeper.application.dao.GameDao;
+import com.minesweeper.application.dao.TurnDao;
+import com.minesweeper.application.common.exception.exception.InvalidParametersException;
 import com.minesweeper.application.model.Game;
 import com.minesweeper.application.repository.GamesRepository;
 
@@ -23,11 +22,10 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @RequiredArgsConstructor
 public class GameProvider {
-    private final GameConverter gameConverter;
     private final GamesRepository gameRepository;
     
     public Game getGameById(final UUID gameId) {
-        return getGameOptionalById(gameId).orElseGet(null);
+        return getGameOptionalById(gameId).orElseThrow(() -> new InvalidParametersException());
     }
 
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED, readOnly = true)
@@ -37,12 +35,20 @@ public class GameProvider {
 
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED)
     public Game createGame(final GameDao gameDao) throws InvalidParametersException {
+        Game game = new Game();
         try {
-            final Game game = new Game(gameDao);
-            return gameRepository.save(game);
+            game = new Game(gameDao);
+            game = gameRepository.save(game);
         } catch (RuntimeException e) {
             log.error(e.getMessage());
             throw e;
         }
+        return game;
+    }
+
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED)
+    public Game newTurn(final TurnDao turnDao) throws InvalidParametersException {
+        Game currentGame = getGameById(turnDao.getGame_id());
+        return currentGame;
     }
 }

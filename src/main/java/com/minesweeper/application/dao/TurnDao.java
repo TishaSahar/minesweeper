@@ -1,5 +1,7 @@
 package com.minesweeper.application.dao;
 
+import java.util.UUID;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -11,10 +13,10 @@ import lombok.Setter;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class GameDao {
-    private int width;
+public class TurnDao {
+    private UUID game_id;
 
-    private int height;
-    
-    private int minesCount;
+    private int col;
+
+    private int row;
 }
