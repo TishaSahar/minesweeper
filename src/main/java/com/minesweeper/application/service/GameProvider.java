@@ -10,6 +10,7 @@ import com.minesweeper.application.dao.TurnDao;
 import com.minesweeper.application.common.exception.exception.InvalidParametersException;
 import com.minesweeper.application.model.Game;
 import com.minesweeper.application.repository.GamesRepository;
+import com.minesweeper.application.util.GameUtil;
 
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
@@ -23,7 +24,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class GameProvider {
     private final GamesRepository gameRepository;
-    
+
     public Game getGameById(final UUID gameId) {
         return getGameOptionalById(gameId).orElseThrow(() -> new InvalidParametersException());
     }
@@ -48,7 +49,15 @@ public class GameProvider {
 
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED)
     public Game newTurn(final TurnDao turnDao) throws InvalidParametersException {
-        Game currentGame = getGameById(turnDao.getGame_id());
+        Game currentGame = new Game();
+        try {
+            currentGame = getGameById(turnDao.getGame_id());
+            GameUtil.makeTurn(currentGame, turnDao);
+            currentGame = gameRepository.save(currentGame);
+        } catch (InvalidParametersException e) {
+            log.error("Cannot process current turn {}", e.getMessage());
+            throw e;
+        }
         return currentGame;
     }
 }
