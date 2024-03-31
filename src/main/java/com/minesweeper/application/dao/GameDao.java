@@ -16,5 +16,5 @@ public class GameDao {
 
     private int height;
     
-    private int minesCount;
+    private int mines_count;
 }

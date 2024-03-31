@@ -1,7 +1,5 @@
 package com.minesweeper.application.model;
 
-import static com.minesweeper.application.constants.MinesweeperConstants.*;
-
 import com.minesweeper.application.common.exception.exception.InvalidParametersException;
 import com.minesweeper.application.dao.GameDao;
 import com.minesweeper.application.util.GameUtil;
@@ -38,8 +36,8 @@ public class Game {
     @Column(name = "height", nullable = false)
     private int height;
 
-    @Column(name = "minesCount", nullable = false)
-    private int minesCount;
+    @Column(name = "mines_count", nullable = false)
+    private int mines_count;
 
     @Column(name = "completed", nullable = false)
     private Boolean completed;
@@ -50,12 +48,12 @@ public class Game {
     public Game(final GameDao aGameDao) {
         if (aGameDao.getWidth() < 2 || aGameDao.getWidth() > 30
                 || aGameDao.getHeight() < 2 || aGameDao.getHeight() > 30
-                || aGameDao.getMinesCount() > aGameDao.getWidth() * aGameDao.getHeight() - 1) {
+                || aGameDao.getMines_count() > aGameDao.getWidth() * aGameDao.getHeight() - 1) {
             throw new InvalidParametersException();
         }
         width = aGameDao.getWidth();
         height = aGameDao.getHeight();
-        minesCount = aGameDao.getMinesCount();
+        mines_count = aGameDao.getMines_count();
         completed = false;
         field = GameUtil.buildField(aGameDao);
     }

@@ -25,7 +25,7 @@ public class GameUtil {
 
         // push mines to the field at the random places
         Random rand = new Random();
-        int minesCounter = aGameDao.getMinesCount();
+        int minesCounter = aGameDao.getMines_count();
         while (minesCounter != 0) {
             int row = rand.nextInt(aGameDao.getHeight());
             int col = rand.nextInt(aGameDao.getWidth());

@@ -17,7 +17,7 @@ public class GameInfoResponse {
     private UUID game_id;
     private int width;
     private int height;
-    private int minesCount;
+    private int mines_count;
     private String[][] field;
     private boolean completed;
 }
